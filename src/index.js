@@ -64,13 +64,12 @@ class Canvas {
     return polygon
   }
 
-  grid (
-    stepX = 10, stepY = 10, lineWidth = 0.5, color, bgColor
-  ) {
+  grid (stepX = 10, stepY = 10, strokeOptions) {
     const { canvas, context } = this
     const { width, height } = canvas
+    const lineWidth = strokeOptions.lineWidth || context.lineWidth
 
-    this.rect(0, 0, width, height).fill(bgColor)
+    this.rect(0, 0, width, height).fill('white')
 
     context.beginPath()
 
@@ -86,7 +85,7 @@ class Canvas {
       context.lineTo(i, height)
     }
 
-    this.stroke(color, lineWidth)
+    this.stroke(strokeOptions)
 
     context.restore()
   }
