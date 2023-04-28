@@ -13,24 +13,45 @@ class Canvas {
     this.context = context
   }
 
-  circle (
-    x, y, r, startAngle = 0, endAngle = Math.PI * 2, counterclockwise = false
+  line (x1, y1, x2, y2, strokeOptions) {
+    const { context } = this
+
+    context.beginPath()
+    context.moveTo(x1, y1)
+    context.lineTo(x2, y2)
+    this.stroke(strokeOptions)
+
+    return this
+  }
+
+  arc (
+    x, y, r, startAngle, endAngle, counterclockwise, strokeOptions
   ) {
     const { context } = this
 
     context.beginPath()
     context.arc(x, y, r, startAngle, endAngle, counterclockwise)
-    this.stroke()
+    this.stroke(strokeOptions)
 
     return this
   }
 
-  rect (x, y, width, height) {
+  circle (x, y, r, strokeOptions) {
+    const { context } = this
+
+    context.beginPath()
+    context.arc(x, y, r, 0, Math.PI * 2)
+    this.stroke(strokeOptions)
+
+    return this
+  }
+
+  rect (x, y, width, height, strokeOptions) {
     const { context } = this
 
     context.beginPath()
     context.rect(x, y, width, height)
-    this.stroke()
+    this.stroke(strokeOptions)
 
     return this
   }
@@ -40,7 +61,7 @@ class Canvas {
     const polygon = new Polygon(x, y, r, sides, context)
 
     polygon.createPath()
-    this.stroke()
+    polygon.stroke()
 
     return polygon
   }
@@ -72,13 +93,14 @@ class Canvas {
     context.restore()
   }
 
-  stroke (color, lineWidth) {
+  stroke (strokeOptions = {}) {
     const { context } = this
+    const { lineWidth, strokeStyle } = strokeOptions
 
     context.save()
 
-    if (color) {
-      context.strokeStyle = color
+    if (strokeStyle) {
+      context.strokeStyle = strokeStyle
     }
 
     if (lineWidth) {
@@ -91,13 +113,13 @@ class Canvas {
     return this
   }
 
-  fill (bgColor) {
+  fill (fillStyle) {
     const { context } = this
 
     context.save()
 
-    if (bgColor) {
-      context.fillStyle = bgColor
+    if (fillStyle) {
+      context.fillStyle = fillStyle
     }
 
     context.fill()

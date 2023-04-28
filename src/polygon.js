@@ -42,6 +42,41 @@ class Polygon {
 
     context.closePath()
   }
+
+  move (x, y) {
+    this.x = x
+    this.y = y
+  }
+
+  fill (fillStyle) {
+    const { context } = this
+    
+    context.save()
+
+    if (fillStyle) {
+      context.fillStyle = fillStyle
+    }
+
+    context.fill()
+    context.restore()
+  }
+
+  stroke (strokeStyle, lineWidth) {
+    const { context } = this
+    
+    context.save()
+
+    if (strokeStyle) {
+      context.strokeStyle = strokeStyle
+    }
+
+    if (lineWidth) {
+      context.lineWidth = lineWidth
+    }
+
+    context.stroke()
+    context.restore()
+  }
 }
 
 export default Polygon
