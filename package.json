@@ -1,6 +1,6 @@
 {
   "name": "plain-canvas",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Canvas library.",
   "main": "./dist/plain-canvas.min.js",
   "author": "xNoRain001",
