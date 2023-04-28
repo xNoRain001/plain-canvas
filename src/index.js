@@ -1,4 +1,4 @@
-import Polygon from './polygon'
+// import Polygon from './polygon'
 
 class Canvas {
   constructor (canvas, options = {}) {
@@ -56,12 +56,10 @@ class Canvas {
     return this
   }
 
-  polygon (x, y, r, sides) {
-    const { context } = this
-    const polygon = new Polygon(x, y, r, sides, context)
-
+  polygon (x, y, r, sides, strokeOptions) {
+    const polygon = new Polygon(x, y, r, sides, this.canvas)
     polygon.createPath()
-    polygon.stroke()
+    polygon.stroke(strokeOptions)
 
     return polygon
   }
@@ -135,6 +133,52 @@ class Canvas {
       x: x - left,
       y: y - top
     }
+  }
+}
+
+class Polygon extends Canvas {
+  constructor(x, y, r, sides, context) {
+    super(context, {})
+    this.x = x
+    this.y = y
+    this.r = r
+    this.sides = sides
+  }
+
+  getPoints() {
+    const { x, y, r, sides } = this
+    const step = 360 / sides
+    const points = []
+
+    for (let i = 0; i < 360; i += step) {
+      const angle = i / 180 * Math.PI
+      const _x = x + r * Math.sin(angle)
+      const _y = y + r * Math.cos(angle)
+
+      points.push({
+        x: _x,
+        y: _y
+      })
+    }
+
+    return points
+  }
+
+  createPath() {
+    const points = this.getPoints()
+    const { context } = this
+    const { x, y } = points[0]
+    
+    context.beginPath()
+    context.moveTo(x, y)
+
+    for (let i = 1, l = points.length; i < l; i++) {
+      const { x, y } = points[i]
+
+      context.lineTo(x, y)
+    }
+
+    context.closePath()
   }
 }
 
