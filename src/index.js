@@ -1,5 +1,3 @@
-// import Polygon from './polygon'
-
 class Canvas {
   constructor (canvas, options = {}) {
     const context = canvas.getContext('2d')
@@ -67,7 +65,7 @@ class Canvas {
   grid (stepX = 10, stepY = 10, strokeOptions) {
     const { canvas, context } = this
     const { width, height } = canvas
-    const lineWidth = strokeOptions.lineWidth || context.lineWidth
+    const lineWidth = strokeOptions?.lineWidth || context.lineWidth
 
     this.rect(0, 0, width, height).fill('white')
 
@@ -136,8 +134,8 @@ class Canvas {
 }
 
 class Polygon extends Canvas {
-  constructor(x, y, r, sides, context) {
-    super(context, {})
+  constructor(x, y, r, sides, canvas) {
+    super(canvas, {})
     this.x = x
     this.y = y
     this.r = r
