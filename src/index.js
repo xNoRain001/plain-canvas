@@ -35,13 +35,18 @@ class Canvas {
   }
 
   circle (x, y, r, strokeOptions) {
+    return this.arc(x, y, r, 0, Math.PI * 2, false, strokeOptions)
+  }
+
+  ellipse (x, y, rX, rY, rotation, strokeOptions) {
     const { context } = this
 
     context.beginPath()
-    context.arc(x, y, r, 0, Math.PI * 2)
+    context.ellipse(x, y, rX, rY, rotation, 0, Math.PI * 2)
     this.stroke(strokeOptions)
 
     return this
+
   }
 
   rect (x, y, width, height, strokeOptions) {
