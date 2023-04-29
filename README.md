@@ -48,6 +48,7 @@ canvas.arc(375, 75, 25, 0, Math.PI)
 canvas.arc(475, 75, 25, 0, Math.PI, true)
 canvas.polygon(75, 175, 25, 4)
 canvas.polygon(170, 175, 25, 6)
+canvas.ellipse(270, 175, 12.5, 25, Math.PI * 1/4)
 
 // fill
 canvas.rect(50, 250, 50, 50).fill('red')
