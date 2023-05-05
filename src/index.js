@@ -59,8 +59,13 @@ class Canvas {
     return this
   }
 
-  polygon (x, y, r, sides, strokeOptions) {
-    const polygon = new Polygon(x, y, r, sides, this.canvas)
+  polygon (x, y, r, sides, startAngle, strokeOptions) {
+    if (typeof startAngle !== 'number') {
+      strokeOptions = startAngle
+      startAngle = 0
+    }
+
+    const polygon = new Polygon(x, y, r, sides, startAngle, this.canvas)
     polygon.createPath()
     polygon.stroke(strokeOptions)
 
@@ -139,21 +144,22 @@ class Canvas {
 }
 
 class Polygon extends Canvas {
-  constructor(x, y, r, sides, canvas) {
+  constructor(x, y, r, sides, startAngle, canvas) {
     super(canvas, {})
     this.x = x
     this.y = y
     this.r = r
+    this.startAngle = startAngle
     this.sides = sides
   }
 
   getPoints() {
-    const { x, y, r, sides } = this
+    const { x, y, r, sides, startAngle } = this
     const step = 360 / sides
     const points = []
 
     for (let i = 0; i < 360; i += step) {
-      const angle = i / 180 * Math.PI
+      const angle = (i - startAngle) / 180 * Math.PI
       const _x = x + r * Math.sin(angle)
       const _y = y + r * Math.cos(angle)
 
