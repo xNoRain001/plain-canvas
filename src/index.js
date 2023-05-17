@@ -105,16 +105,21 @@ class Canvas {
 
   stroke (strokeOptions = {}) {
     const { context } = this
-    const { lineWidth, strokeStyle } = strokeOptions
 
     context.save()
 
-    if (strokeStyle) {
-      context.strokeStyle = strokeStyle
-    }
+    if (typeof strokeOptions === 'string') {
+      context.strokeStyle = strokeOptions
+    } else {
+      const { lineWidth, strokeStyle } = strokeOptions
 
-    if (lineWidth) {
-      context.lineWidth = lineWidth
+      if (strokeStyle) {
+        context.strokeStyle = strokeStyle
+      }
+
+      if (lineWidth) {
+        context.lineWidth = lineWidth
+      }
     }
 
     context.stroke()
