@@ -2,10 +2,15 @@ class Canvas {
   constructor (canvas, options = {}) {
     const context = canvas.getContext('2d')
     const { lineWidth, fillStyle, strokeStyle } = options
+    const {
+      lineWidth: _lineWidth,
+      fillStyle: _fillStyle,
+      strokeStyle: _strokeStyle
+    } = context
 
-    context.lineWidth = lineWidth || 1
-    context.fillStyle = fillStyle || '#fff'
-    context.strokeStyle = strokeStyle || '#000'
+    context.lineWidth = lineWidth || _lineWidth || 1
+    context.fillStyle = fillStyle || _fillStyle || '#fff'
+    context.strokeStyle = strokeStyle || _strokeStyle || '#000'
 
     this.canvas = canvas
     this.context = context
@@ -151,6 +156,9 @@ class Polygon extends Canvas {
     this.r = r
     this.startAngle = startAngle
     this.sides = sides
+    const { context } = this
+    this.fillStyle = context.fillStyle
+    this.strokeStyle = context.strokeStyle
   }
 
   getPoints() {
